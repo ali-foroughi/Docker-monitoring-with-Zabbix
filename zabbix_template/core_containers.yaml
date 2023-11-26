@@ -1,0 +1,44 @@
+zabbix_export:
+  version: '6.0'
+  date: '2023-11-25T14:31:20Z'
+  groups:
+    - uuid: fa2649300e79495a974c00e60a4a5b61
+      name: 5G
+  templates:
+    - uuid: 5ea35fd83f91456a98683d9c028e4593
+      template: 'Core containers'
+      name: 'Core containers'
+      description: 'A template to monitoring containers for Core team.'
+      groups:
+        - name: 5G
+      items:
+        - uuid: 8b4421f5204543c98ad75f65829cbeaa
+          name: 'Container exit code'
+          type: TRAP
+          key: exit_code
+          delay: '0'
+          triggers:
+            - uuid: 602f422d503f4bc181b792f8d5d19d13
+              expression: 'last(/Core containers/exit_code)>0'
+              recovery_mode: NONE
+              name: 'Container exited with a non-zero status'
+              priority: DISASTER
+              description: 'A container has stopped working.'
+        - uuid: bce83871b85d44f2890b08dabde95b3c
+          name: 'Container status'
+          type: TRAP
+          key: status
+          delay: '0'
+          trends: '0'
+          value_type: CHAR
+        - uuid: 70877eb653804759a98651c692acaeae
+          name: 'Container uptime'
+          type: TRAP
+          key: uptime
+          delay: '0'
+          triggers:
+            - uuid: bbfec89062fd4f6dac4dec42935a4510
+              expression: 'last(/Core containers/uptime)<=90'
+              name: 'Container has restarted'
+              priority: DISASTER
+              manual_close: 'YES'

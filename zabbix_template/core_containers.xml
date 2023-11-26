@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zabbix_export>
+    <version>6.0</version>
+    <date>2023-11-25T14:33:31Z</date>
+    <groups>
+        <group>
+            <uuid>fa2649300e79495a974c00e60a4a5b61</uuid>
+            <name>5G</name>
+        </group>
+    </groups>
+    <templates>
+        <template>
+            <uuid>5ea35fd83f91456a98683d9c028e4593</uuid>
+            <template>Core containers</template>
+            <name>Core containers</name>
+            <description>A template to monitoring containers for Core team.</description>
+            <groups>
+                <group>
+                    <name>5G</name>
+                </group>
+            </groups>
+            <items>
+                <item>
+                    <uuid>8b4421f5204543c98ad75f65829cbeaa</uuid>
+                    <name>Container exit code</name>
+                    <type>TRAP</type>
+                    <key>exit_code</key>
+                    <delay>0</delay>
+                    <triggers>
+                        <trigger>
+                            <uuid>602f422d503f4bc181b792f8d5d19d13</uuid>
+                            <expression>last(/Core containers/exit_code)&gt;0</expression>
+                            <recovery_mode>NONE</recovery_mode>
+                            <name>Container exited with a non-zero status</name>
+                            <priority>DISASTER</priority>
+                            <description>A container has stopped working.</description>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <uuid>bce83871b85d44f2890b08dabde95b3c</uuid>
+                    <name>Container status</name>
+                    <type>TRAP</type>
+                    <key>status</key>
+                    <delay>0</delay>
+                    <trends>0</trends>
+                    <value_type>CHAR</value_type>
+                </item>
+                <item>
+                    <uuid>70877eb653804759a98651c692acaeae</uuid>
+                    <name>Container uptime</name>
+                    <type>TRAP</type>
+                    <key>uptime</key>
+                    <delay>0</delay>
+                    <triggers>
+                        <trigger>
+                            <uuid>bbfec89062fd4f6dac4dec42935a4510</uuid>
+                            <expression>last(/Core containers/uptime)&lt;=90</expression>
+                            <name>Container has restarted</name>
+                            <priority>DISASTER</priority>
+                            <manual_close>YES</manual_close>
+                        </trigger>
+                    </triggers>
+                </item>
+            </items>
+        </template>
+    </templates>
+</zabbix_export>

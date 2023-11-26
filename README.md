@@ -25,14 +25,13 @@ I've included the template files as example. The important part is that the name
 - Create a virtual environment:
 ```
 python3 -m venv env
-
 ```
 - Activate the virtual environment and install the requirements:
 ```
 source env/bin/activate
 ```
 ```
-pip install --index-url http://172.20.14.54:5000/index/ --trusted-host 172.20.14.54 -r requirements.txt
+pip install -r requirements.txt
 ```
 
 - Create a systemd service file under `/etc/systemd/system/container-stats.service` with the following configuration: 
